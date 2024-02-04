@@ -9,11 +9,7 @@
     <div class="row gx-4 gx-lg-5 justify-content-center">
       <div class="col-md-10 col-lg-8 col-xl-7">
         <div class="page-heading">
-          {% if msg_sent: %}
-          <h1>Menssagem enviada com sucesso!</h1>
-          {% else: %}
           <h1>Fale comigo</h1>
-          {% endif %}
           <span class="subheading">Tem perguntas? Eu tenho respostas.</span>
         </div>
       </div>
@@ -22,8 +18,10 @@
 </header>
 <!-- Main Content-->
 <main class="mb-4">
+
   <div class="container px-4 px-lg-5">
     <div class="row gx-4 gx-lg-5 justify-content-center">
+        {% if not email_enviado: %}
       <div class="col-md-10 col-lg-8 col-xl-7">
         <p>
 Quer entrar em contato? Preencha o formulário abaixo para me enviar uma mensagem e
@@ -84,15 +82,19 @@ Quer entrar em contato? Preencha o formulário abaixo para me enviar uma mensage
             </div>
             <br />
             <button
-              class="btn btn-danger text-uppercase"
+              class="btn btn-primary text-uppercase"
               id="submitButton"
               type="submit"
             >
-              NOT USED in Day 69
+              Enviar
             </button>
           </form>
         </div>
       </div>
+        {% else: %}
+        <h1 class="page-heading text-center">Email enviado com sucesso!</h1>
+        {% endif %}
+
     </div>
   </div>
 </main>

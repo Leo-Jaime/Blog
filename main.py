@@ -12,7 +12,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 # Import your forms from the forms.py
 from forms import CreatePostForm, RegisterForm, LoginForm, CommentForm
 import os
-
+from enviar_email import enviar_email
 
 
 app = Flask(__name__)
@@ -230,15 +230,31 @@ def delete_post(post_id):
     db.session.commit()
     return redirect(url_for('get_all_posts'))
 
-
+@app.route("/delete-comentario/<int:id_coment>/<int:post_id>")
+@admin_only
+def delete_comentario(id_coment, post_id):
+    comentario_to_delete = db.get_or_404(Comment, id_coment)
+    db.session.delete(comentario_to_delete)
+    db.session.commit()
+    return redirect(url_for('show_post', post_id=post_id))
 @app.route("/about")
 def about():
     return render_template("about.html")
 
 
-@app.route("/contact")
+@app.route("/contact", methods=["GET", "POST"])
 def contact():
-    return render_template("contact.html")
+    if request.method == "POST":
+        nome = request.form.get('name')
+        email = request.form.get('email')
+        telefone = request.form.get('phone')
+        mensagem = request.form.get('message')
+        mensagem_formulada = f"Subject:Blog-Flask\n\n\n\nNOME: {nome}\nTELEFONE: {telefone}\nEMAIL:{email}\n\n MENSAGEM:\n{mensagem} "
+        enviar_email(email=email, mensagem=mensagem_formulada)
+        flash(message="Email Enviado com Sucesso.")
+        return render_template("contact.html", email_enviado=True)
+
+    return render_template("contact.html", email_enviado=False)
 
 
 if __name__ == "__main__":
