@@ -3,7 +3,7 @@ import os
 
 USER = os.environ.get('USER_EMAIL')
 SENHA = os.environ.get('USER_SENHA')
-EMAIL_DESTINO = os.environ.get('EMAIL_DETINO')
+EMAIL_DESTINO = os.environ.get('EMAIL_DESTINO')
 def enviar_email(mensagem):
     conexao = smtplib.SMTP("smtp.gmail.com",port=587)
     conexao.starttls()
