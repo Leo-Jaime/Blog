@@ -250,7 +250,7 @@ def contact():
         telefone = request.form.get('phone')
         mensagem = request.form.get('message')
         mensagem_formulada = f"Subject:Blog-Flask\n\n\n\nNOME: {nome}\nTELEFONE: {telefone}\nEMAIL:{email}\n\n MENSAGEM:\n{mensagem} "
-        enviar_email(email=email, mensagem=mensagem_formulada)
+        enviar_email(mensagem=mensagem_formulada)
         flash(message="Email Enviado com Sucesso.")
         return render_template("contact.html", email_enviado=True)
 
