@@ -231,7 +231,6 @@ def delete_post(post_id):
     return redirect(url_for('get_all_posts'))
 
 @app.route("/delete-comentario/<int:id_coment>/<int:post_id>")
-@admin_only
 def delete_comentario(id_coment, post_id):
     comentario_to_delete = db.get_or_404(Comment, id_coment)
     db.session.delete(comentario_to_delete)
